@@ -15,9 +15,11 @@ BASE_URL = os.environ.get("APP_BASE_URL", "http://localhost:5000")
 def browser():
     # Opción 1: Chrome (headless - sin interfaz gráfica)
     options = webdriver.ChromeOptions()
-    options.add_argument("--headless")  # Ejecuta sin interfaz gráfica
+    options.add_argument("--headless=new")  # Ejecuta sin interfaz gráfica
     options.add_argument("--no-sandbox")  # Necesario para algunos entornos
     options.add_argument("--disable-dev-shm-usage")  # Necesario para algunos entornos
+    options.add_argument("--disable-gpu")
+    options.add_argument("--no-proxy-server")
     driver = webdriver.Chrome(options=options)
 
     # Opción 2: Firefox (headless)
@@ -60,12 +62,6 @@ def find_elements(browser):
 )
 def test_calculadora(browser, num1, num2, operacion, resultado_esperado):
     browser.get(BASE_URL)
-    print("URL:", browser.current_url)
-    print("Título:", browser.title)
-    print(browser.page_source[:2000])
-    WebDriverWait(browser, 30).until(
-        EC.presence_of_element_located((By.NAME, "num1"))
-    )
 
     num1_input, num2_input, operacion_select, calcular_button = find_elements(browser)
 
