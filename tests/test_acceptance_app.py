@@ -60,6 +60,9 @@ def find_elements(browser):
 )
 def test_calculadora(browser, num1, num2, operacion, resultado_esperado):
     browser.get(BASE_URL)
+    print("URL:", browser.current_url)
+    print("Título:", browser.title)
+    print(browser.page_source[:2000])
     WebDriverWait(browser, 30).until(
         EC.presence_of_element_located((By.NAME, "num1"))
     )
