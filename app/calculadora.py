@@ -23,3 +23,15 @@ def dividir(a, b):
     if b == 0:
         raise ZeroDivisionError("No se puede dividir por cero")
     return a / b
+
+
+def potencia(a, b):
+    """Eleva el primer número a la potencia del segundo."""
+    return a**b
+
+
+def modulo(a, b):
+    """Devuelve el residuo de dividir el primer número entre el segundo."""
+    if b == 0:
+        raise ZeroDivisionError("No se puede calcular el módulo con divisor cero")
+    return a % b
