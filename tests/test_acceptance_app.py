@@ -20,6 +20,12 @@ def browser():
     options.add_argument("--disable-dev-shm-usage")  # Necesario para algunos entornos
     options.add_argument("--disable-gpu")
     options.add_argument("--no-proxy-server")
+
+    options.add_argument(
+        "--disable-features=HttpsUpgrades,HttpsFirstBalancedModeAutoEnable"
+    )
+    options.add_experimental_option("prefs", {"https_only_mode_enabled": False})
+
     driver = webdriver.Chrome(options=options)
 
     # Opción 2: Firefox (headless)
@@ -40,9 +46,12 @@ def get_resultado(browser):
     return resultado.text
 
 
-# Función de ayuda para encontrar los elementos del formulario
+# Función de ayuda para encontrar los elementos del formulario.
+# Espera a que el formulario cargue antes de buscar los campos.
 def find_elements(browser):
-    num1_input = browser.find_element(By.NAME, "num1")
+    num1_input = WebDriverWait(browser, 10).until(
+        EC.presence_of_element_located((By.NAME, "num1"))
+    )
     num2_input = browser.find_element(By.NAME, "num2")
     operacion_select = Select(browser.find_element(By.NAME, "operacion"))
     calcular_button = browser.find_element(By.CSS_SELECTOR, "button[type='submit']")
