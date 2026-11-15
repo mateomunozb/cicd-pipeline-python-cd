@@ -219,6 +219,11 @@ jobs:
           echo "La versión $GITHUB_SHA no quedó desplegada a tiempo"
           exit 1
 
+      - name: Verify calculator page
+        run: |
+          curl -i "$APP_BASE_URL/"
+          curl -fsS "$APP_BASE_URL/" | grep -q 'name="num1"'
+
       - name: Run Acceptance Tests against Staging
         run: pytest tests/test_acceptance_app.py --no-cov --html=staging-acceptance-report.html
 
